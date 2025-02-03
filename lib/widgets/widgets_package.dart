@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/model/detail_restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/routes/navigation_route.dart';
+import '../provider/provider_package.dart';
+
+part 'restaurant_list_card_widget.dart';
+part 'restaurant_detail_name_card_widget.dart';
+part 'restaurant_detail_description_card_widget.dart';
+part 'restaurant_detail_menu_widget.dart';
+part 'restaurant_detail_reviews_widget.dart';
+part 'restaurant_detail_form_review_widget.dart';
+part 'restaurant_grid_list_card_widget.dart';
+part 'bookmark_icon_widget.dart';
+part 'bookmark_grid_list_card_widget.dart';
+part 'body_detail_screen_widget.dart';
+part 'bookmark_list_card_widget.dart';
