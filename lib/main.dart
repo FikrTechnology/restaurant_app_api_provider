@@ -10,6 +10,13 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => BookmarkListProvider(),
         ),
+        Provider(create: (context) => ApiService(),),
+        ChangeNotifierProvider(
+          create: (context) => RestaurantListProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RestaurantDetailProvider(context.read<ApiService>()),
+        ),
       ],
       child: const MyApp(),
     ), 

@@ -8,7 +8,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<RestaurantListResponse> _futureRestaurantListResponse;
+  // late Future<RestaurantListResponse> _futureRestaurantListResponse;
 
   final TextEditingController _searchController = TextEditingController();
 
@@ -19,7 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _futureRestaurantListResponse = ApiService().getRestaurantList();
+    // _futureRestaurantListResponse = ApiService().getRestaurantList();
+
+    Future.microtask(() {
+      context.read<RestaurantListProvider>().fetchRestaurantList();
+    });
   }
 
   @override
@@ -80,35 +84,55 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Expanded(
-            child: _searchResults.isNotEmpty
-                ? RestaurantGridListCardWidget(
-                    restaurants: _searchResults,
-                  )
-                : FutureBuilder<RestaurantListResponse>(
-                    future: _futureRestaurantListResponse,
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                        case ConnectionState.waiting:
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        case ConnectionState.active:
-                        case ConnectionState.done:
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text(snapshot.error.toString()),
-                            );
-                          }
-                          return RestaurantGridListCardWidget(
-                            restaurants: snapshot.data!.restaurants,
-                          );
-                        default:
-                          return const SizedBox();
-                      }
-                    },
-                  ),
-          ),
+              child: _searchResults.isNotEmpty
+                  ? RestaurantGridListCardWidget(
+                      restaurants: _searchResults,
+                    )
+                  : Consumer<RestaurantListProvider>(
+                      builder: (context, value, child) {
+                        return switch (value.resultState) {
+                          RestaurantListLoadingState() => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          RestaurantListResultLoadedState(
+                            data: var restaurants
+                          ) =>
+                            RestaurantGridListCardWidget(
+                              restaurants: restaurants,
+                            ),
+                          RestaurantListErrorState(error: var message) =>
+                            Center(
+                              child: Text(message),
+                            ),
+                          _ => const SizedBox()
+                        };
+                      },
+                    )
+              // : FutureBuilder<RestaurantListResponse>(
+              //     future: _futureRestaurantListResponse,
+              //     builder: (context, snapshot) {
+              //       switch (snapshot.connectionState) {
+              //         case ConnectionState.none:
+              //         case ConnectionState.waiting:
+              //           return const Center(
+              //             child: CircularProgressIndicator(),
+              //           );
+              //         case ConnectionState.active:
+              //         case ConnectionState.done:
+              //           if (snapshot.hasError) {
+              //             return Center(
+              //               child: Text(snapshot.error.toString()),
+              //             );
+              //           }
+              //           return RestaurantGridListCardWidget(
+              //             restaurants: snapshot.data!.restaurants,
+              //           );
+              //         default:
+              //           return const SizedBox();
+              //       }
+              //     },
+              //   ),
+              ),
         ],
       ),
     );
