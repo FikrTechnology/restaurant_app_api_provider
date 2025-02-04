@@ -17,6 +17,12 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => RestaurantDetailProvider(context.read<ApiService>()),
         ),
+        ChangeNotifierProvider(
+          create: (context) => RestaurantDetailReviewsProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RestaurantSearchListProvider(context.read<ApiService>()),
+        ),
       ],
       child: const MyApp(),
     ), 

@@ -53,7 +53,6 @@ class _DetailScreenState extends State<DetailScreen> {
             RestaurantDetailErrorState(error: var error) => Center(child: Text(error)),
             RestaurantDetailResultLoadedState(data: var restaurant) => BodyDetailScreenWidget(
               restaurant: restaurant,
-              onReviewSubmitted: _loadRestaurantDetail,
             ),
             _ => const SizedBox(),
           };

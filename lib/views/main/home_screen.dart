@@ -8,18 +8,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // late Future<RestaurantListResponse> _futureRestaurantListResponse;
 
   final TextEditingController _searchController = TextEditingController();
 
   Timer? _debounce;
 
-  List<RestaurantList> _searchResults = [];
-
   @override
   void initState() {
     super.initState();
-    // _futureRestaurantListResponse = ApiService().getRestaurantList();
 
     Future.microtask(() {
       context.read<RestaurantListProvider>().fetchRestaurantList();
@@ -37,26 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (_searchController.text.length >= 3) {
-        _searchRestaurants(_searchController.text);
+        context.read<RestaurantSearchListProvider>().fetchSearchRestaurantList(_searchController.text);
       } else {
         setState(() {
-          _searchResults = [];
+          context.read<RestaurantSearchListProvider>().clearRestaurantList();
         });
       }
     });
-  }
-
-  Future<void> _searchRestaurants(String query) async {
-    try {
-      final response = await ApiService().searchRestaurants(query);
-      setState(() {
-        _searchResults = response.restaurants;
-      });
-    } catch (e) {
-      setState(() {
-        _searchResults = [];
-      });
-    }
   }
 
   @override
@@ -84,10 +67,25 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Expanded(
-              child: _searchResults.isNotEmpty
-                ? RestaurantGridListCardWidget(
-                    restaurants: _searchResults,
-                  )
+              child: _searchController.text.isNotEmpty
+                ? Consumer<RestaurantSearchListProvider>(
+                    builder: (context, value, child) {
+                      return switch (value.resultState) {
+                        RestaurantSearchLoadingState() => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        RestaurantSearchResultLoadedState(data: var restaurants) =>
+                          RestaurantGridListCardWidget(
+                            restaurants: restaurants,
+                          ),
+                        RestaurantSearchErrorState(error: var message) =>
+                          Center(
+                            child: Text(message),
+                          ),
+                        _ => const SizedBox()
+                      };
+                    },
+                )
                 : Consumer<RestaurantListProvider>(
                     builder: (context, value, child) {
                       return switch (value.resultState) {

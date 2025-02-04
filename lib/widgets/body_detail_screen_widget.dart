@@ -2,9 +2,8 @@ part of 'widgets_package.dart';
 
 class BodyDetailScreenWidget extends StatelessWidget {
   final RestaurantDetail restaurant;
-  final VoidCallback onReviewSubmitted;
 
-  const BodyDetailScreenWidget({super.key, required this.restaurant, required this.onReviewSubmitted});
+  const BodyDetailScreenWidget({super.key, required this.restaurant,});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +18,8 @@ class BodyDetailScreenWidget extends StatelessWidget {
           DetailNameCard(restaurant: restaurant),
           DetailDescriptionCard(restaurant: restaurant),
           DetailMenuWidget(restaurant: restaurant),
-          DetailReviewsWidget(restaurant: restaurant),
-          ReviewForm(restaurant: restaurant, onReviewSubmitted: onReviewSubmitted,),
+          const DetailReviewsWidget(),
+          ReviewForm(restaurant: restaurant,),
         ],
       ),
     );
