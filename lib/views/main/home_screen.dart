@@ -85,53 +85,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
               child: _searchResults.isNotEmpty
-                  ? RestaurantGridListCardWidget(
-                      restaurants: _searchResults,
-                    )
-                  : Consumer<RestaurantListProvider>(
-                      builder: (context, value, child) {
-                        return switch (value.resultState) {
-                          RestaurantListLoadingState() => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          RestaurantListResultLoadedState(
-                            data: var restaurants
-                          ) =>
-                            RestaurantGridListCardWidget(
-                              restaurants: restaurants,
-                            ),
-                          RestaurantListErrorState(error: var message) =>
-                            Center(
-                              child: Text(message),
-                            ),
-                          _ => const SizedBox()
-                        };
-                      },
-                    )
-              // : FutureBuilder<RestaurantListResponse>(
-              //     future: _futureRestaurantListResponse,
-              //     builder: (context, snapshot) {
-              //       switch (snapshot.connectionState) {
-              //         case ConnectionState.none:
-              //         case ConnectionState.waiting:
-              //           return const Center(
-              //             child: CircularProgressIndicator(),
-              //           );
-              //         case ConnectionState.active:
-              //         case ConnectionState.done:
-              //           if (snapshot.hasError) {
-              //             return Center(
-              //               child: Text(snapshot.error.toString()),
-              //             );
-              //           }
-              //           return RestaurantGridListCardWidget(
-              //             restaurants: snapshot.data!.restaurants,
-              //           );
-              //         default:
-              //           return const SizedBox();
-              //       }
-              //     },
-              //   ),
+                ? RestaurantGridListCardWidget(
+                    restaurants: _searchResults,
+                  )
+                : Consumer<RestaurantListProvider>(
+                    builder: (context, value, child) {
+                      return switch (value.resultState) {
+                        RestaurantListLoadingState() => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        RestaurantListResultLoadedState(
+                          data: var restaurants
+                        ) =>
+                          RestaurantGridListCardWidget(
+                            restaurants: restaurants,
+                          ),
+                        RestaurantListErrorState(error: var message) =>
+                          Center(
+                            child: Text(message),
+                          ),
+                        _ => const SizedBox()
+                      };
+                    },
+                  )
               ),
         ],
       ),

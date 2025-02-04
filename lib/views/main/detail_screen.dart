@@ -9,9 +9,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  // final Completer<RestaurantDetail> _completerRestaurant =
-  //     Completer<RestaurantDetail>();
-  // late Future<RestaurantDetailResponse> _futureRestaurantDetail;
 
   @override
   void initState() {
@@ -21,8 +18,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
   void _loadRestaurantDetail() {
     setState(() {
-      // _futureRestaurantDetail =
-      //     ApiService().getRestaurantDetail(widget.restaurantId.toString());
       Future.microtask(() {
         context
             .read<RestaurantDetailProvider>()
@@ -48,15 +43,6 @@ class _DetailScreenState extends State<DetailScreen> {
                 };
               },
             ),
-            // child: FutureBuilder(
-            //     future: _completerRestaurant.future,
-            //     builder: (context, snapshot) {
-            //       return switch (snapshot.connectionState) {
-            //         ConnectionState.done => BookmarkIcon(restaurant: snapshot.data!),
-            //         _ => const SizedBox(),
-            //       };
-            //     },
-            //   ),
           ),
         ],
       ),
@@ -73,27 +59,6 @@ class _DetailScreenState extends State<DetailScreen> {
           };
         },
       ),
-      // body: FutureBuilder(
-      //     future: _futureRestaurantDetail,
-      //     builder: (context, snapshot) {
-      //       switch (snapshot.connectionState) {
-      //         case ConnectionState.waiting:
-      //           return const Center(child: CircularProgressIndicator());
-      //         case ConnectionState.done:
-      //           if (snapshot.hasError) {
-      //             return Center(child: Text(snapshot.error.toString()));
-      //           }
-
-      //           final restaurantDetailData = snapshot.data!.restaurant;
-      //           _completerRestaurant.complete(restaurantDetailData);
-      //           return BodyDetailScreenWidget(
-      //             restaurant: restaurantDetailData,
-      //             onReviewSubmitted: _loadRestaurantDetail,
-      //           );
-      //         default:
-      //           return const SizedBox();
-      //       }
-      //     }),
     );
   }
 }
