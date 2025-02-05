@@ -50,7 +50,10 @@ class _DetailScreenState extends State<DetailScreen> {
         builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantDetailLoadingState() => const Center(child: CircularProgressIndicator()),
-            RestaurantDetailErrorState(error: var error) => Center(child: Text(error)),
+            RestaurantDetailErrorState(error: var error) => ErrorDisplayWidget(
+              message: error, 
+              onRetry: () => context.read<RestaurantListProvider>().fetchRestaurantList(),
+            ),
             RestaurantDetailResultLoadedState(data: var restaurant) => BodyDetailScreenWidget(
               restaurant: restaurant,
             ),

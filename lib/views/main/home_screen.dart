@@ -79,8 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             restaurants: restaurants,
                           ),
                         RestaurantSearchErrorState(error: var message) =>
-                          Center(
-                            child: Text(message),
+                          ErrorDisplayWidget(
+                            message: message, 
+                            onRetry: () => context.read<RestaurantListProvider>().fetchRestaurantList(),
                           ),
                         _ => const SizedBox()
                       };
@@ -99,8 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             restaurants: restaurants,
                           ),
                         RestaurantListErrorState(error: var message) =>
-                          Center(
-                            child: Text(message),
+                          ErrorDisplayWidget(
+                            message: message, 
+                            onRetry: () => context.read<RestaurantListProvider>().fetchRestaurantList(),
                           ),
                         _ => const SizedBox()
                       };

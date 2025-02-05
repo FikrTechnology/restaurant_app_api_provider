@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/model/detail_restaurant.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
@@ -18,3 +19,4 @@ part 'bookmark_icon_widget.dart';
 part 'bookmark_grid_list_card_widget.dart';
 part 'body_detail_screen_widget.dart';
 part 'bookmark_list_card_widget.dart';
+part 'error_handling_widget.dart';
