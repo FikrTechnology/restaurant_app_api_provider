@@ -24,19 +24,7 @@ class ReviewFormState extends State<ReviewForm> {
   void _submitReview() async {
     if (_formKey.currentState!.validate()) {
       try {
-        // final response = await ApiService().sendReview(
-        //   widget.restaurant.id,
-        //   _nameController.text,
-        //   _reviewController.text,
-        // );
-        Future.microtask(() {
-          context.read<RestaurantDetailReviewsProvider>().fetchReviews(
-            widget.restaurant.id,
-            _nameController.text,
-            _reviewController.text,
-          );
-        });
-        
+        context.read<RestaurantDetailProvider>().fetchReviews(widget.restaurant.id, _nameController.text, _reviewController.text);
         _nameController.clear();
         _reviewController.clear();
       } catch (e) {
@@ -96,6 +84,10 @@ class ReviewFormState extends State<ReviewForm> {
                     child: const Text('Submit Review'),
                   ),
                 ),
+                if (_responseMessage != null)
+                  Center(
+                    child: Text(_responseMessage!),
+                  ),
               ],
             ),
           ),

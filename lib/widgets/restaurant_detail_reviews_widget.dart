@@ -7,19 +7,19 @@ class DetailReviewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<RestaurantDetailProvider>(builder: (context, value, child) {
-      return switch (value.resultState) {
+      return switch (value.reviewState) {
         RestaurantDetailLoadingState() =>
           const Center(child: CircularProgressIndicator()),
         RestaurantDetailErrorState(error: var error) =>
           Center(child: Text(error)),
-        RestaurantDetailResultLoadedState(data: var restaurant) =>
-          _buildReviews(context, restaurant),
+        RestaurantDetailRewiewsState(data: var review) =>
+          _buildReviews(context, review),
         _ => const SizedBox(),
       };
     });
   }
 
-  Widget _buildReviews(BuildContext context, RestaurantDetail restaurant) {
+  Widget _buildReviews(BuildContext context, List<CustomerReview> review) {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
@@ -30,7 +30,7 @@ class DetailReviewsWidget extends StatelessWidget {
             height: 150,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: restaurant.customerReviews
+              children: review
                   .map((review) => Card(
                         child: Container(
                           width: 200,

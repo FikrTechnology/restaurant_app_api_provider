@@ -17,3 +17,9 @@ class RestaurantDetailResultLoadedState extends RestaurantDetailResultState {
 
   RestaurantDetailResultLoadedState(this.data);
 }
+
+class RestaurantDetailRewiewsState extends RestaurantDetailResultState {
+  final List<CustomerReview> data;
+
+  RestaurantDetailRewiewsState(this.data);
+}

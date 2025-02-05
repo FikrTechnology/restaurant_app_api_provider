@@ -29,6 +29,7 @@ class ApiService {
 
   Future<SearchRestaurantListResponse> searchRestaurants(String query) async {
     final response = await http.get(Uri.parse('$_baseUrl/search?q=$query'));
+    
     if (response.statusCode == 200) {
       return SearchRestaurantListResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -48,7 +49,7 @@ class ApiService {
         'review': review,
       }),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return ReviewDetailRestaurantResponse.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to submit review');
