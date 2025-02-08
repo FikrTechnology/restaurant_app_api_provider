@@ -14,18 +14,18 @@ class BookmarkScreen extends StatelessWidget {
           final bookMarkList = value.bookmarkList;
           return switch (bookMarkList.isNotEmpty) {
             true => Center(
-              child: BookmarkGridListCardWidget(
-                restaurants: bookMarkList,
+                child: BookmarkGridListCardWidget(
+                  restaurants: bookMarkList,
+                ),
               ),
-            ),
             _ => const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("No Bookmarked"),
-                ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("No Bookmarked"),
+                  ],
+                ),
               ),
-            ),
           };
         },
       ),

@@ -41,7 +41,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
       notifyListeners();
 
       final result = await _apiService.sendReview(id, name, review);
-      
+
       if (result.error) {
         _reviewState = RestaurantDetailErrorState(result.message);
         notifyListeners();

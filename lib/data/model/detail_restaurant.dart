@@ -48,7 +48,8 @@ class RestaurantDetail {
     required this.customerReviews,
   });
 
-  factory RestaurantDetail.fromJson(Map<String, dynamic> json) => RestaurantDetail(
+  factory RestaurantDetail.fromJson(Map<String, dynamic> json) =>
+      RestaurantDetail(
         id: json["id"],
         name: json["name"],
         description: json["description"],
@@ -139,4 +140,3 @@ class Menus {
         "drinks": List<dynamic>.from(drinks.map((x) => x.toJson())),
       };
 }
-

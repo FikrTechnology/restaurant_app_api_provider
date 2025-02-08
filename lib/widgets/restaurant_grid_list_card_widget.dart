@@ -3,8 +3,10 @@ part of 'widgets_package.dart';
 class RestaurantGridListCardWidget extends StatelessWidget {
   final List<RestaurantList> restaurants;
 
-  const RestaurantGridListCardWidget(
-      {super.key, required this.restaurants,});
+  const RestaurantGridListCardWidget({
+    super.key,
+    required this.restaurants,
+  });
 
   @override
   Widget build(BuildContext context) {

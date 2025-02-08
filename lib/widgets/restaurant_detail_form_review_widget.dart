@@ -2,7 +2,10 @@ part of 'widgets_package.dart';
 
 class ReviewForm extends StatefulWidget {
   final RestaurantDetail restaurant;
-  const ReviewForm({super.key, required this.restaurant,});
+  const ReviewForm({
+    super.key,
+    required this.restaurant,
+  });
 
   @override
   ReviewFormState createState() => ReviewFormState();
@@ -24,13 +27,12 @@ class ReviewFormState extends State<ReviewForm> {
   void _submitReview() async {
     if (_formKey.currentState!.validate()) {
       try {
-        context.read<RestaurantDetailProvider>().fetchReviews(widget.restaurant.id, _nameController.text, _reviewController.text);
+        context.read<RestaurantDetailProvider>().fetchReviews(
+            widget.restaurant.id, _nameController.text, _reviewController.text);
         _nameController.clear();
         _reviewController.clear();
       } catch (e) {
-        setState(() {
-          _responseMessage = 'Failed to submit review';
-        });
+        _responseMessage = 'Failed to submit review';
       }
     }
   }

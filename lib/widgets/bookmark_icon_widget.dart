@@ -13,15 +13,15 @@ class BookmarkIcon extends StatefulWidget {
 }
 
 class _BookmarkIconState extends State<BookmarkIcon> {
-
   @override
   void initState() {
     final bookmarkedListProvider = context.read<BookmarkListProvider>();
     final bookmarkIconProvider = context.read<BookmarkIconProvider>();
 
-    Future.microtask(() {
-      final restaurantInList =
-          bookmarkedListProvider.checkItemBookmark(widget.restaurant);
+    Future.microtask(
+      () {
+        final restaurantInList =
+            bookmarkedListProvider.checkItemBookmark(widget.restaurant);
         bookmarkIconProvider.isBookmarked = restaurantInList;
       },
     );
@@ -36,14 +36,12 @@ class _BookmarkIconState extends State<BookmarkIcon> {
         final bookmarkedListProvider = context.read<BookmarkListProvider>();
         final bookmarkIconProvider = context.read<BookmarkIconProvider>();
         final isBookmarked = bookmarkIconProvider.isBookmarked;
-        setState(() {
-          if (!isBookmarked) {
-            bookmarkedListProvider.addBookmark(widget.restaurant);
-          } else {
-            bookmarkedListProvider.removeBookmark(widget.restaurant);
-          }
-          bookmarkIconProvider.isBookmarked = !isBookmarked;
-        });
+        if (!isBookmarked) {
+          bookmarkedListProvider.addBookmark(widget.restaurant);
+        } else {
+          bookmarkedListProvider.removeBookmark(widget.restaurant);
+        }
+        bookmarkIconProvider.isBookmarked = !isBookmarked;
       },
       icon: Icon(
         context.watch<BookmarkIconProvider>().isBookmarked

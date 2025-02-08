@@ -2,7 +2,9 @@ part of 'widgets_package.dart';
 
 class DetailReviewsWidget extends StatelessWidget {
   // final RestaurantDetail restaurant;
-  const DetailReviewsWidget({super.key,});
+  const DetailReviewsWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

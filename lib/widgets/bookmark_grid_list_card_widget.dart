@@ -1,11 +1,10 @@
 part of 'widgets_package.dart';
 
-
 class BookmarkGridListCardWidget extends StatelessWidget {
   final List<RestaurantDetail> restaurants;
 
   const BookmarkGridListCardWidget({
-    super.key, 
+    super.key,
     required this.restaurants,
   });
 

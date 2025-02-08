@@ -3,7 +3,10 @@ part of 'widgets_package.dart';
 class BodyDetailScreenWidget extends StatelessWidget {
   final RestaurantDetail restaurant;
 
-  const BodyDetailScreenWidget({super.key, required this.restaurant,});
+  const BodyDetailScreenWidget({
+    super.key,
+    required this.restaurant,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,9 @@ class BodyDetailScreenWidget extends StatelessWidget {
           DetailDescriptionCard(restaurant: restaurant),
           DetailMenuWidget(restaurant: restaurant),
           const DetailReviewsWidget(),
-          ReviewForm(restaurant: restaurant,),
+          ReviewForm(
+            restaurant: restaurant,
+          ),
         ],
       ),
     );

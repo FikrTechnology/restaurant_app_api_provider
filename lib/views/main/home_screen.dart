@@ -8,7 +8,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final TextEditingController _searchController = TextEditingController();
 
   Timer? _debounce;
@@ -33,11 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (_searchController.text.length >= 3) {
-        context.read<RestaurantSearchListProvider>().fetchSearchRestaurantList(_searchController.text);
+        context
+            .read<RestaurantSearchListProvider>()
+            .fetchSearchRestaurantList(_searchController.text);
       } else {
-        setState(() {
-          context.read<RestaurantSearchListProvider>().clearRestaurantList();
-        });
+        context.read<RestaurantSearchListProvider>().clearRestaurantList();
       }
     });
   }
@@ -68,47 +67,52 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
               child: _searchController.text.isNotEmpty
-                ? Consumer<RestaurantSearchListProvider>(
-                    builder: (context, value, child) {
-                      return switch (value.resultState) {
-                        RestaurantSearchLoadingState() => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        RestaurantSearchResultLoadedState(data: var restaurants) =>
-                          RestaurantGridListCardWidget(
-                            restaurants: restaurants,
-                          ),
-                        RestaurantSearchErrorState(error: var message) =>
-                          ErrorDisplayWidget(
-                            message: message, 
-                            onRetry: () => context.read<RestaurantListProvider>().fetchRestaurantList(),
-                          ),
-                        _ => const SizedBox()
-                      };
-                    },
-                )
-                : Consumer<RestaurantListProvider>(
-                    builder: (context, value, child) {
-                      return switch (value.resultState) {
-                        RestaurantListLoadingState() => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        RestaurantListResultLoadedState(
-                          data: var restaurants
-                        ) =>
-                          RestaurantGridListCardWidget(
-                            restaurants: restaurants,
-                          ),
-                        RestaurantListErrorState(error: var message) =>
-                          ErrorDisplayWidget(
-                            message: message, 
-                            onRetry: () => context.read<RestaurantListProvider>().fetchRestaurantList(),
-                          ),
-                        _ => const SizedBox()
-                      };
-                    },
-                  )
-              ),
+                  ? Consumer<RestaurantSearchListProvider>(
+                      builder: (context, value, child) {
+                        return switch (value.resultState) {
+                          RestaurantSearchLoadingState() => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          RestaurantSearchResultLoadedState(
+                            data: var restaurants
+                          ) =>
+                            RestaurantGridListCardWidget(
+                              restaurants: restaurants,
+                            ),
+                          RestaurantSearchErrorState(error: var message) =>
+                            ErrorDisplayWidget(
+                              message: message,
+                              onRetry: () => context
+                                  .read<RestaurantListProvider>()
+                                  .fetchRestaurantList(),
+                            ),
+                          _ => const SizedBox()
+                        };
+                      },
+                    )
+                  : Consumer<RestaurantListProvider>(
+                      builder: (context, value, child) {
+                        return switch (value.resultState) {
+                          RestaurantListLoadingState() => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          RestaurantListResultLoadedState(
+                            data: var restaurants
+                          ) =>
+                            RestaurantGridListCardWidget(
+                              restaurants: restaurants,
+                            ),
+                          RestaurantListErrorState(error: var message) =>
+                            ErrorDisplayWidget(
+                              message: message,
+                              onRetry: () => context
+                                  .read<RestaurantListProvider>()
+                                  .fetchRestaurantList(),
+                            ),
+                          _ => const SizedBox()
+                        };
+                      },
+                    )),
         ],
       ),
     );

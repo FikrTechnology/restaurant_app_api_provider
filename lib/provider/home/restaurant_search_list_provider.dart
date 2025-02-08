@@ -20,12 +20,10 @@ class RestaurantSearchListProvider extends ChangeNotifier {
 
   Future<void> fetchSearchRestaurantList(String query) async {
     try {
-      
       _resultState = RestaurantSearchLoadingState();
       notifyListeners();
 
       final result = await _apiService.searchRestaurants(query);
-      
 
       if (result.error) {
         _resultState = RestaurantSearchErrorState(result.error.toString());

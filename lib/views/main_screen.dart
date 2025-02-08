@@ -7,7 +7,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<IndexNavProvider>(
-        builder: (context, value, child){
+        builder: (context, value, child) {
           return switch (value.indexBottomNavBar) {
             0 => const HomeScreen(),
             _ => const BookmarkScreen(),
@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: context.watch<IndexNavProvider>().indexBottomNavBar,
-        onTap: (index){
+        onTap: (index) {
           context.read<IndexNavProvider>().indexBottomNavBar = index;
         },
         items: const [

@@ -9,7 +9,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -17,12 +16,10 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void _loadRestaurantDetail() {
-    setState(() {
-      Future.microtask(() {
-        context
-            .read<RestaurantDetailProvider>()
-            .fetchRestaurantDetail(widget.restaurantId);
-      });
+    Future.microtask(() {
+      context
+          .read<RestaurantDetailProvider>()
+          .fetchRestaurantDetail(widget.restaurantId);
     });
   }
 
@@ -49,14 +46,18 @@ class _DetailScreenState extends State<DetailScreen> {
       body: Consumer<RestaurantDetailProvider>(
         builder: (context, value, child) {
           return switch (value.resultState) {
-            RestaurantDetailLoadingState() => const Center(child: CircularProgressIndicator()),
+            RestaurantDetailLoadingState() =>
+              const Center(child: CircularProgressIndicator()),
             RestaurantDetailErrorState(error: var error) => ErrorDisplayWidget(
-              message: error, 
-              onRetry: () => context.read<RestaurantListProvider>().fetchRestaurantList(),
-            ),
-            RestaurantDetailResultLoadedState(data: var restaurant) => BodyDetailScreenWidget(
-              restaurant: restaurant,
-            ),
+                message: error,
+                onRetry: () => context
+                    .read<RestaurantListProvider>()
+                    .fetchRestaurantList(),
+              ),
+            RestaurantDetailResultLoadedState(data: var restaurant) =>
+              BodyDetailScreenWidget(
+                restaurant: restaurant,
+              ),
             _ => const SizedBox(),
           };
         },
