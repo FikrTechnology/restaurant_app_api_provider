@@ -66,10 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Expanded(
-              child: _searchController.text.isNotEmpty
-                  ? Consumer<RestaurantSearchListProvider>(
-                      builder: (context, value, child) {
-                        return switch (value.resultState) {
+            child: Consumer<RestaurantSearchListProvider>(
+              builder: (context, value, child) {
+                if (_searchController.text.isNotEmpty) {
+                  return value.restaurantList.isNotEmpty
+                      ? switch (value.resultState) {
                           RestaurantSearchLoadingState() => const Center(
                               child: CircularProgressIndicator(),
                             ),
@@ -87,32 +88,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .fetchRestaurantList(),
                             ),
                           _ => const SizedBox()
-                        };
-                      },
-                    )
-                  : Consumer<RestaurantListProvider>(
-                      builder: (context, value, child) {
-                        return switch (value.resultState) {
-                          RestaurantListLoadingState() => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          RestaurantListResultLoadedState(
-                            data: var restaurants
-                          ) =>
-                            RestaurantGridListCardWidget(
-                              restaurants: restaurants,
-                            ),
-                          RestaurantListErrorState(error: var message) =>
-                            ErrorDisplayWidget(
-                              message: message,
-                              onRetry: () => context
-                                  .read<RestaurantListProvider>()
-                                  .fetchRestaurantList(),
-                            ),
-                          _ => const SizedBox()
-                        };
-                      },
-                    )),
+                        }
+                      : const Center(child: Text("Masukkan minimal 3 huruf"));
+                } else {
+                  return Consumer<RestaurantListProvider>(
+                    builder: (context, value, child) {
+                      return switch (value.resultState) {
+                        RestaurantListLoadingState() => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        RestaurantListResultLoadedState(
+                          data: var restaurants
+                        ) =>
+                          RestaurantGridListCardWidget(
+                            restaurants: restaurants,
+                          ),
+                        RestaurantListErrorState(error: var message) =>
+                          ErrorDisplayWidget(
+                            message: message,
+                            onRetry: () => context
+                                .read<RestaurantListProvider>()
+                                .fetchRestaurantList(),
+                          ),
+                        _ => const SizedBox()
+                      };
+                    },
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
