@@ -3,8 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/model/detail_restaurant.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/provider/bookmark/local_database_provider.dart';
-import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:restaurant_app/provider/static/restaurant_detail_result_state.dart';
 import 'package:restaurant_app/routes/navigation_route.dart';
 import '../provider/provider_package.dart';

@@ -10,7 +10,8 @@ class MainScreen extends StatelessWidget {
         builder: (context, value, child) {
           return switch (value.indexBottomNavBar) {
             0 => const HomeScreen(),
-            _ => const BookmarkScreen(),
+            1 => const BookmarkScreen(),
+            _ => const SettingsScreen(),
           };
         },
       ),
@@ -27,6 +28,10 @@ class MainScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark),
             label: 'Bookmark',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
       ),

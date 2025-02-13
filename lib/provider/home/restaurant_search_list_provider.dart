@@ -1,7 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/provider/static/restaurant_search_result_state.dart';
+part of '../provider_package.dart';
 
 class RestaurantSearchListProvider extends ChangeNotifier {
   final ApiService _apiService;
