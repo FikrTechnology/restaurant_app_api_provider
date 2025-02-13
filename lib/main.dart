@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/local/local_database_service.dart';
+import 'package:restaurant_app/data/local/local_notification_service.dart';
 import 'package:restaurant_app/provider/provider_package.dart';
 import 'package:restaurant_app/routes/navigation_route.dart';
 import 'package:restaurant_app/style/theme/restaurant_theme.dart';
@@ -38,6 +39,14 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => ThemeProvider(),
+        ),
+        Provider(
+          create: (context) => LocalNotificationService()..init(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LocalNotificationProvider(
+            context.read<LocalNotificationService>()
+          )..requestPermissions(),
         ),
       ],
       child: const MyApp(),

@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:restaurant_app/data/local/local_notification_service.dart';
 import 'package:restaurant_app/data/model/detail_restaurant.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/static/restaurant_list_result_state.dart';
@@ -19,3 +18,4 @@ part 'home/restaurant_search_list_provider.dart';
 part 'detail/restaurant_detail_provider.dart';
 part 'bookmark/local_database_provider.dart';
 part 'settings/theme_provider.dart';
+part 'notification/local_notification_provider.dart';

@@ -1,7 +1,20 @@
 part of '../../package.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  Future<void> _requestPermission() async {
+   context.read<LocalNotificationProvider>().requestPermissions();
+ }
+
+ Future<void> _showNotification() async {
+   context.read<LocalNotificationProvider>().showNotification();
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +54,51 @@ class SettingsScreen extends StatelessWidget {
                     );
                   },
                 ),
+              ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Consumer<ThemeProvider>(
+                  builder: (context, themeProvider, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Aktifkan Reminder',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Switch(
+                          value: false,
+                          onChanged: (value) {
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _requestPermission();
+              },
+              child: Consumer<LocalNotificationProvider>(
+                builder: (context, value, child) {
+                  return Text(
+                    "Request permission! (${value.permission})",
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _showNotification();
+              },
+              child: const Text(
+                "Show notification with payload and custom sound",
+                textAlign: TextAlign.center,
               ),
             ),
           ],
