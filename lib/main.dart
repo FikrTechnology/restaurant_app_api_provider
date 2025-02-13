@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Restaurant App',
           theme: value.isDarkModeOn ? RestaurantTheme.darkTheme : RestaurantTheme.lightTheme,
-          // darkTheme: RestaurantTheme.darkTheme,
-          // themeMode: ThemeMode.system,
+          darkTheme: value.isLightModeOn ? RestaurantTheme.lightTheme : RestaurantTheme.darkTheme,
+          themeMode: ThemeMode.system,
           initialRoute: NavigationRoute.mainRoute.name,
           routes: {
             NavigationRoute.mainRoute.name: (context) => const MainScreen(),

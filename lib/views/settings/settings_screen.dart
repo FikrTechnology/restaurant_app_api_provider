@@ -22,13 +22,19 @@ class SettingsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Dark Mode',
+                          Theme.of(context).brightness == Brightness.light
+                          ? 'Dark Mode'
+                          : 'Light Mode',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Switch(
-                          value: themeProvider.isDarkModeOn,
+                          value: Theme.of(context).brightness == Brightness.light 
+                          ? themeProvider.isDarkModeOn
+                          : themeProvider.isLightModeOn,
                           onChanged: (value) {
-                            themeProvider.toggleTheme();
+                            Theme.of(context).brightness == Brightness.light
+                            ? themeProvider.toggleTheme()
+                            : themeProvider.toggleLightTheme();
                           },
                         ),
                       ],
