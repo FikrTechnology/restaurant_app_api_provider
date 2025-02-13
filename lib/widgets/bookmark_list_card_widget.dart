@@ -1,7 +1,7 @@
 part of 'widgets_package.dart';
 
 class BookmarkRestaurantListCard extends StatelessWidget {
-  final RestaurantDetail restaurant;
+  final RestaurantList restaurant;
   final Function() onTap;
 
   const BookmarkRestaurantListCard(

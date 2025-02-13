@@ -15,14 +15,16 @@ class BookmarkIcon extends StatefulWidget {
 class _BookmarkIconState extends State<BookmarkIcon> {
   @override
   void initState() {
-    final bookmarkedListProvider = context.read<BookmarkListProvider>();
+    final localDatabaseProvider = context.read<LocalDatabaseProvider>();
     final bookmarkIconProvider = context.read<BookmarkIconProvider>();
 
     Future.microtask(
-      () {
-        final restaurantInList =
-            bookmarkedListProvider.checkItemBookmark(widget.restaurant);
-        bookmarkIconProvider.isBookmarked = restaurantInList;
+      () async {
+        await localDatabaseProvider.loadRestaurantById(widget.restaurant.id);
+        final value =
+            localDatabaseProvider.checkItemBookmarked(widget.restaurant.id);
+
+        bookmarkIconProvider.isBookmarked = value;
       },
     );
 
@@ -32,16 +34,27 @@ class _BookmarkIconState extends State<BookmarkIcon> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        final bookmarkedListProvider = context.read<BookmarkListProvider>();
+      onPressed: () async {
+        final localDatabaseProvider = context.read<LocalDatabaseProvider>();
         final bookmarkIconProvider = context.read<BookmarkIconProvider>();
         final isBookmarked = bookmarkIconProvider.isBookmarked;
+
+        RestaurantList restaurant = RestaurantList(
+          id: widget.restaurant.id,
+          name: widget.restaurant.name,
+          description: widget.restaurant.description,
+          pictureId: widget.restaurant.pictureId,
+          city: widget.restaurant.city,
+          rating: widget.restaurant.rating,
+        );
+
         if (!isBookmarked) {
-          bookmarkedListProvider.addBookmark(widget.restaurant);
+          await localDatabaseProvider.saveRestaurant(restaurant);
         } else {
-          bookmarkedListProvider.removeBookmark(widget.restaurant);
+          await localDatabaseProvider.removeRestoranById(widget.restaurant.id);
         }
         bookmarkIconProvider.isBookmarked = !isBookmarked;
+        localDatabaseProvider.loadAllRestaurant();
       },
       icon: Icon(
         context.watch<BookmarkIconProvider>().isBookmarked

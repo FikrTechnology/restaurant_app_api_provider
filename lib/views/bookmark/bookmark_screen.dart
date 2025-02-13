@@ -1,7 +1,21 @@
 part of '../../package.dart';
 
-class BookmarkScreen extends StatelessWidget {
+class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
+
+  @override
+  State<BookmarkScreen> createState() => _BookmarkScreenState();
+}
+
+class _BookmarkScreenState extends State<BookmarkScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask((){
+      context.read<LocalDatabaseProvider>().loadAllRestaurant();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,9 +23,9 @@ class BookmarkScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Bookmark Restaurant'),
       ),
-      body: Consumer<BookmarkListProvider>(
+      body: Consumer<LocalDatabaseProvider>(
         builder: (context, value, child) {
-          final bookMarkList = value.bookmarkList;
+          final bookMarkList = value.restaurantList ?? [];
           return switch (bookMarkList.isNotEmpty) {
             true => Center(
                 child: BookmarkGridListCardWidget(

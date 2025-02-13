@@ -1,7 +1,7 @@
 part of 'widgets_package.dart';
 
 class BookmarkGridListCardWidget extends StatelessWidget {
-  final List<RestaurantDetail> restaurants;
+  final List<RestaurantList> restaurants;
 
   const BookmarkGridListCardWidget({
     super.key,
@@ -17,7 +17,7 @@ class BookmarkGridListCardWidget extends StatelessWidget {
       ),
       itemCount: restaurants.length,
       itemBuilder: (context, index) {
-        final RestaurantDetail restaurant = restaurants[index];
+        final RestaurantList restaurant = restaurants[index];
         return BookmarkRestaurantListCard(
           restaurant: restaurant,
           onTap: () {
