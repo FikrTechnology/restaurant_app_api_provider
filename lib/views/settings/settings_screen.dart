@@ -16,6 +16,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
    context.read<LocalNotificationProvider>().showNotification();
  }
 
+ Future<void> _showBigPictureNotification() async {
+   context.read<LocalNotificationProvider>().showBigPictureNotification();
+ }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +102,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               child: const Text(
                 "Show notification with payload and custom sound",
+                textAlign: TextAlign.center,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _showBigPictureNotification();
+              },
+              child: const Text(
+                "Show big picture notification",
                 textAlign: TextAlign.center,
               ),
             ),
