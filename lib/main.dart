@@ -52,7 +52,7 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => LocalNotificationProvider(
             context.read<LocalNotificationService>()
-          )..requestPermissions(),
+          ),
         ),
       ],
       child: const MyApp(),

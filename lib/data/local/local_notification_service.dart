@@ -13,7 +13,7 @@ class LocalNotificationService {
   LocalNotificationService(this.httpService);
 
   Future<void> init() async {
-    const InitializationSettingsAndroid = AndroidInitializationSettings(
+    const initializationSettingsAndroid = AndroidInitializationSettings(
       'app_icon',
     );
 
@@ -24,7 +24,7 @@ class LocalNotificationService {
     );
 
     const initializationSettings = InitializationSettings(
-      android: InitializationSettingsAndroid,
+      android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
     );
 
@@ -38,14 +38,6 @@ class LocalNotificationService {
             .resolvePlatformSpecificImplementation<
                 AndroidFlutterLocalNotificationsPlugin>()
             ?.areNotificationsEnabled() ??
-        false;
-  }
-
-  Future<bool> _requestAndroidNotificationsPermission() async {
-    return await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestNotificationsPermission() ??
         false;
   }
 
@@ -210,8 +202,8 @@ class LocalNotificationService {
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
-      'Daily scheduled notification title',
-      'This is a body of daily scheduled notification',
+      'Waktunya Makan Siang !!!',
+      'Silahkan cek Bookmark untuk melihat restoran yang tersedia',
       datetimeSchedule,
       notificationDetails,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
