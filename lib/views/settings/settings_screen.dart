@@ -61,19 +61,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: [
                         Text(
                           Theme.of(context).brightness == Brightness.light
-                              ? 'Dark Mode'
-                              : 'Light Mode',
+                              ? 'Nyalakan Dark Mode'
+                              : 'Matikan Dark Mode',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Switch(
-                          value:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? themeProvider.isDarkModeOn
-                                  : themeProvider.isLightModeOn,
+                          value: themeProvider.isDarkModeOn,
                           onChanged: (value) {
-                            Theme.of(context).brightness == Brightness.light
-                                ? themeProvider.toggleTheme()
-                                : themeProvider.toggleLightTheme();
+                            themeProvider.toggleTheme();
                           },
                         ),
                       ],

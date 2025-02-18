@@ -17,7 +17,7 @@ void main() {
 
     setUp(() {
       mockClient = MockClient();
-      restaurantServices = ApiService();
+      restaurantServices = ApiService(client: mockClient);
     });
 
     test('Get Success Restaurant', () async {

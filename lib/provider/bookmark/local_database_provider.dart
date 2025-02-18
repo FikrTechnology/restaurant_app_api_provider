@@ -66,7 +66,7 @@ class LocalDatabaseProvider extends ChangeNotifier {
   }
 
   bool checkItemBookmarked(String id) {
-    final isSameRestaurant = _restaurant!.id == id;
+    final isSameRestaurant = _restaurant?.id == id;
     return isSameRestaurant;
   }
 }
