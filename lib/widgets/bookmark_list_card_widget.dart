@@ -34,6 +34,11 @@ class BookmarkRestaurantListCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
                               "https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}",
+                              errorBuilder: (context, error, stackTrace) => SvgPicture.asset(
+                                "assets/icons/ico_no_image.svg",
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
