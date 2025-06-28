@@ -24,7 +24,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         title: const Text('Bookmark Restaurant'),
       ),
       body: Consumer<LocalDatabaseProvider>(
-        builder: (context, value, child) {
+        builder: (_, value, __) {
           final bookMarkList = value.restaurantList ?? [];
           return switch (bookMarkList.isNotEmpty) {
             true => Center(
