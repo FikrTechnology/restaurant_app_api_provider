@@ -59,4 +59,27 @@ class ApiService {
       throw Exception('Failed to submit review');
     }
   }
+
+  // Fungsi baru untuk mengecek moderasi dari AI
+  Future<Map<String, dynamic>> checkModeration(String text) async {
+    // Gunakan 10.0.2.2 jika di Android Emulator, atau 127.0.0.1 jika di iOS Simulator
+    final String aiBaseUrl = 'http://127.0.0.1:8000'; 
+    
+    final response = await client.post(
+      Uri.parse('$aiBaseUrl/moderasi'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'text': text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Gagal menghubungi AI Moderasi');
+    }
+  }
+
 }

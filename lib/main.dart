@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
             NavigationRoute.mainRoute.name: (context) => const MainScreen(),
             NavigationRoute.detailRoute.name: (context) => DetailScreen(
                   restaurantId:
-                      ModalRoute.of(context)?.settings.arguments as String,
+                      (ModalRoute.of(context)?.settings.arguments as String?) ?? "",
                 ),
             NavigationRoute.settingsRoute.name: (context) =>
                 const SettingsScreen(),

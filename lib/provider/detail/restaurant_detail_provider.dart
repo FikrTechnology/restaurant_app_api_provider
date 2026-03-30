@@ -33,23 +33,37 @@ class RestaurantDetailProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchReviews(String id, String name, String review) async {
+  Future<String?> fetchReviews(String id, String name, String review) async {
     try {
-      _reviewState = RestaurantDetailLoadingState();
-      notifyListeners();
+      // State tidak lagi diubah menjadi Loading / Error agar daftar Review Card di UI tidak menghilang
 
+      // ==========================================
+      // 1. Cek moderasi AI terlebih dahulu
+      // ==========================================
+      final moderationResult = await _apiService.checkModeration(review);
+      
+      final String status = moderationResult['status'] ?? 'positif'; 
+      if (status == 'negatif') {
+         // HENTIKAN EKSEKUSI, kembalikan alasan ke pemanggil (UI) untuk dijadikan pop-up
+         return moderationResult['alasan'] ?? 'Komentar tidak pantas.';
+      }
+
+      // ==========================================
+      // 2. Jika Positif, teruskan ke API Dicoding
+      // ==========================================
       final result = await _apiService.sendReview(id, name, review);
-
       if (result.error) {
-        _reviewState = RestaurantDetailErrorState(result.message);
-        notifyListeners();
+        // Kembalikan pesan error dari API tanpa merusak UI review cards
+        return result.message;
       } else {
+        // Jika berhaisl, PERBARUI data reviews di UI dengan data terbaru
         _reviewState = RestaurantDetailRewiewsState(result.customReviews);
         notifyListeners();
+        return null; // Return null menandakan proses SUKSES
       }
-    } on Exception catch (e) {
-      _reviewState = RestaurantDetailErrorState(e.toString());
-      notifyListeners();
+    } catch (e) {
+      // Menangkap error jika API AI mati atau API Dicoding gagal
+      return e.toString();
     }
   }
 }

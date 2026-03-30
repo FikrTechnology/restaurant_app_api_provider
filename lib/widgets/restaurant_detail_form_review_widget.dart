@@ -27,12 +27,42 @@ class ReviewFormState extends State<ReviewForm> {
   void _submitReview() async {
     if (_formKey.currentState!.validate()) {
       try {
-        context.read<RestaurantDetailProvider>().fetchReviews(
+        final provider = context.read<RestaurantDetailProvider>();
+        
+        // Panggil provider dan tangkap pesan error (jika ada)
+        final String? errorMessage = await provider.fetchReviews(
             widget.restaurant.id, _nameController.text, _reviewController.text);
-        _nameController.clear();
-        _reviewController.clear();
+            
+        if (!mounted) return;
+
+        if (errorMessage != null) {
+          // Menampilkan dialog apabila ada pesan error (termasuk AI negatif)
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Pesan AI Moderasi'),
+              content: Text(errorMessage),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Tutup'),
+                ),
+              ],
+            ),
+          );
+        } else {
+          // Jika errorMessage == null, artinya sukses
+          _nameController.clear();
+          _reviewController.clear();
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Komentar berhasil ditambahkan!')),
+          );
+        }
       } catch (e) {
-        _responseMessage = 'Failed to submit review';
+        setState(() {
+          _responseMessage = 'Failed to submit review';
+        });
       }
     }
   }
